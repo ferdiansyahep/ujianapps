@@ -53,7 +53,7 @@
         </a>
         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a href="" class="collapse-item">Kelas 7</a>
+                <a href="{{ route('admin.guru.index') }}" class="collapse-item {{ request()->is('admin/guru') || request()->is('admin/guru') ? 'active' : '' }}">Kelas 7</a>
                 <a href="" class="collapse-item">Kelas 8</a>
                 <a href="" class="collapse-item">Kelas 9</a>
             </div>
@@ -82,14 +82,12 @@
         </a>
     </li>
 
-    @can('question_access')
     <li class="nav-item {{ request()->is('admin/questions') || request()->is('admin/questions') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.questions.index') }}">
             <i class="fas fa-cogs"></i>
             <span>{{ __('Pertanyaan') }}</span>
         </a>
     </li>
-    @endcan
 
     <li class="nav-item {{ request()->is('admin/options') || request()->is('admin/options') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.options.index') }}">

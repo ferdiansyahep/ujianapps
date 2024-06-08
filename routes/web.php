@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GuruController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -20,7 +21,6 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth'], function() {
-   
     Route::get('test',[\App\Http\Controllers\TestController::class, 'index'])->name('client.test');
     Route::post('test',[\App\Http\Controllers\TestController::class, 'store'])->name('client.test.store');
     Route::get('results/{result_id}',[\App\Http\Controllers\ResultController::class, 'show'])->name('client.results.show');
@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('roles_mass_destroy', [\App\Http\Controllers\Admin\RoleController::class, 'massDestroy'])->name('roles.mass_destroy');
         Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
         Route::delete('users_mass_destroy', [\App\Http\Controllers\Admin\UserController::class, 'massDestroy'])->name('users.mass_destroy');
+        Route::resource('guru',\App\Http\Controllers\Admin\GuruController::class);
         
         // categories
         Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
@@ -51,7 +52,6 @@ Route::group(['middleware' => 'auth'], function() {
         Route::resource('results', \App\Http\Controllers\Admin\ResultController::class);
         Route::delete('results_mass_destroy', [\App\Http\Controllers\Admin\ResultController::class, 'massDestroy'])->name('results.mass_destroy');
     });
-
 });
 
 Auth::routes();

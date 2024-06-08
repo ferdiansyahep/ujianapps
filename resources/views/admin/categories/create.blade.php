@@ -34,17 +34,19 @@
                         name="name" value="{{ old('name') }}" />
                 </div>
                 <div class="form-group">
-                    <label for="name">{{ __('kelas') }}</label>
-                    <input type="text" class="form-control" id="name" placeholder="{{ __('kelas') }}" name="name"
-                        value="{{ old('name') }}" />
+                    <label for="kelas_id">{{ __('Kelas') }}</label>
+                    <select class="form-control" name="kelas_id" id="kelas_id">
+                        @foreach($kelas as $id => $kelas)
+                        <option value="{{ $id }}">{{ $kelas }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="name">{{ __('Guru pengampu') }}</label>
-                    <select class="form-control" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <label for="user_id">{{ __('Guru Pengampu') }}</label>
+                    <select class="form-control" name="user_id" id="user_id">
+                        @foreach($users as $id => $user)
+                        <option value="{{ $id }}">{{ $user }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group">

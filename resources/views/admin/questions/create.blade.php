@@ -28,11 +28,11 @@
                 <form action="{{ route('admin.questions.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="question_text">{{ __('question text') }}</label>
+                        <label for="question_text">{{ __('Pertanyaan') }}</label>
                         <input type="text" class="form-control" id="question_text" placeholder="{{ __('question text') }}" name="question_text" value="{{ old('question_text') }}" />
                     </div>
                     <div class="form-group">
-                        <label for="category">{{ __('Category') }}</label>
+                        <label for="category">{{ __('Mata Pelajaran') }}</label>
                         <select class="form-control" name="category_id" id="category">
                             @foreach($categories as $id => $category)
                                 <option value="{{ $id }}">{{ $category }}</option>
