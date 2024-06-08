@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Kelas;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 
@@ -20,6 +21,7 @@ class UserController extends Controller
     {
         $users = User::all();
 
+        // Mengirim data pengguna ke view
         return view('admin.users.index', compact('users'));
     }
 
@@ -30,55 +32,60 @@ class UserController extends Controller
      */
     public function create()
     {
+        $kelas = Kelas::pluck('nama_kelas', 'id');
         $roles = Role::pluck('title', 'id');
 
-        return view('admin.users.create', compact('roles'));
+        return view('admin.users.create', compact('roles', 'kelas'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Admin\StoreUserRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreUserRequest $request)
     {
-        $user = User::create($request->validated() + ['password' => bcrypt($request->password)]);
-        $user->roles()->sync($request->input('roles'));
+        $input = $request->all();
+        $input['password'] = bcrypt($request->password);
+        $user = User::create($input);
+        $user->roles()->sync($request->input('roles', []));
 
         return redirect()->route('admin.users.index')->with([
-            'message' => 'successfully created !',
+            'message' => 'User successfully created!',
             'alert-type' => 'success'
-        ]);
-    }
+    ]);
+}
+
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
     {
+        $kelas = Kelas::pluck('nama_kelas', 'id');
         $roles = Role::pluck('title', 'id');
 
-        return view('admin.users.edit', compact('user','roles'));
+        return view('admin.users.edit', compact('user', 'roles', 'kelas'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\Admin\UpdateUserRequest  $request
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request,User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->validated() + ['password' => bcrypt($request->password)]);
-        $user->roles()->sync($request->input('roles'));
+        $user->roles()->sync($request->input('roles', []));
 
         return redirect()->route('admin.users.index')->with([
-            'message' => 'successfully updated !',
+            'message' => 'User successfully updated!',
             'alert-type' => 'info'
         ]);
     }
@@ -86,7 +93,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
@@ -94,15 +101,16 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('admin.users.index')->with([
-            'message' => 'successfully deleted !',
+            'message' => 'User successfully deleted!',
             'alert-type' => 'danger'
         ]);
     }
 
-     /**
-     * Delete all selected Permission at once.
+    /**
+     * Delete all selected users at once.
      *
-     * @param Request $request
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function massDestroy(Request $request)
     {

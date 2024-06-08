@@ -15,4 +15,14 @@ class Category extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class);
+    }
 }

@@ -30,7 +30,10 @@
 
                                 </th>
                                 <th>No</th>
-                                <th>Name</th>
+                                <th>Nama Mata Pelajaran</th>
+                                <th>Guru pengampu</th>
+                                <th>Kelas</th>
+                                <th>Kode kelas</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -42,6 +45,9 @@
                                 </td>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $category->name }}</td>
+                                <td>{{ $category->user?->name }}</td>
+                                <td> {{ $category->kelas?->nama_kelas }} </td>
+                                <td> {{ $category->kode_kelas }} </td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
                                         <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-info">

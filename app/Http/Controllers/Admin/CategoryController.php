@@ -3,29 +3,35 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
-use Illuminate\Contracts\View\View;
+use App\Models\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-use App\Http\Requests\Admin\CategoryRequest;
+use App\Models\Kelas;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-   
-    public function index(): View
+    public function index()
     {
         $categories = Category::all();
-
-        return view('admin.categories.index', compact('categories'));
+        $users = User::all();
+        return view('admin.categories.index', compact('categories', 'users'));
     }
 
-    public function create(): View
+    public function create()
     {
-        return view('admin.categories.create');
+        $users = User::all()->pluck('name', 'id');
+        $kelas = Kelas::all()->pluck('nama_kelas', 'id');
+        return view('admin.categories.create', compact('users', 'kelas'));
     }
 
-    public function store(CategoryRequest $request): RedirectResponse
+    public function store(Request $request)
     {
-        Category::create($request->validated());
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        Category::create($request->all());
 
         return redirect()->route('admin.categories.index')->with([
             'message' => 'successfully created !',
@@ -33,19 +39,26 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function show(Category $category): View
+    public function show(Category $category)
     {
         return view('admin.categories.show', compact('category'));
     }
 
-    public function edit(Category $category): View
+    public function edit(Category $category)
     {
         return view('admin.categories.edit', compact('category'));
     }
 
-    public function update(CategoryRequest $request, Category $category): RedirectResponse
+    public function update(Request $request, Category $category)
     {
-        $category->update($request->validated());
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'kelas' => 'required|string|max:255',
+            'user_id' => 'required|exists:users,id',
+            'kode_kelas' => 'required|string|max:255',
+        ]);
+
+        $category->update($request->all());
 
         return redirect()->route('admin.categories.index')->with([
             'message' => 'successfully updated !',
@@ -53,7 +66,7 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function destroy(Category $category): RedirectResponse
+    public function destroy(Category $category)
     {
         $category->delete();
 

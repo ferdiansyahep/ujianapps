@@ -12,7 +12,6 @@ use App\Models\Question;
 
 class OptionController extends Controller
 {
-   
     public function index(): View
     {
         $options = Option::all();
@@ -23,6 +22,7 @@ class OptionController extends Controller
     public function create(): View
     {
         $questions = Question::all()->pluck('question_text', 'id');
+        
 
         return view('admin.options.create', compact('questions'));
     }

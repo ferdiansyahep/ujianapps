@@ -41,6 +41,7 @@
                                 <td></td>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user->name }}</td>
+                                <td>{{$user->kelas?->nama_kelas}}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
                                     @foreach($user->roles as $key => $role)
