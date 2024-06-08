@@ -1,10 +1,3 @@
-# Laravel 8 - Quiz Application
-
-## Screenshots
-
-![preview img](/preview.png)
-![preview img](/preview2.png)
-
 ## Run Locally
 
 Clone the project
