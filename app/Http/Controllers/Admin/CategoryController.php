@@ -20,15 +20,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
 {
-    public function index(): View
-    {
-        abort_if(Gate::denies('class_access'), Response::HTTP_FORBIDDEN, 'Akses tidak diizinkan');
-        $categories = Category::all();
-        $users = User::all();
-
-        return view('admin.categories.index', compact('categories', 'users'));
-    }
-
     public function create()
     {
         abort_if(Gate::denies('class_create'), Response::HTTP_FORBIDDEN, 'Akses tidak diizinkan');
@@ -129,46 +120,45 @@ class CategoryController extends Controller
 
 
     public function finishExam(Request $request, $category, $questions)
-{
-    $totalQuestions = $questions->count();
-    $pointsPerQuestion = 100 / $totalQuestions;
+    {
+        $totalQuestions = $questions->count();
+        $pointsPerQuestion = 100 / $totalQuestions;
 
-    $answers = $request->session()->get('answers', []);
-    $score = 0;
+        $answers = $request->session()->get('answers', []);
+        $score = 0;
 
-    foreach ($questions as $question) {
-        if (isset($answers[$question->id])) {
-            $selectedOptionId = $answers[$question->id];
-            $selectedOption = $question->options->firstWhere('id', $selectedOptionId);
+        foreach ($questions as $question) {
+            if (isset($answers[$question->id])) {
+                $selectedOptionId = $answers[$question->id];
+                $selectedOption = $question->options->firstWhere('id', $selectedOptionId);
 
-            if ($selectedOption) {
-                // Simpan jawaban yang telah diberikan
-                AnsweredQuestion::create([
-                    'user_id' => Auth::id(),
-                    'question_id' => $question->id,
-                    'selected_option_id' => $selectedOptionId,
-                    'is_correct' => $selectedOption->is_correct,
-                ]);
+                if ($selectedOption) {
+                    AnsweredQuestion::create([
+                        'user_id' => Auth::id(),
+                        'question_id' => $question->id,
+                        'selected_option_id' => $selectedOptionId,
+                        'is_correct' => $selectedOption->is_correct,
+                    ]);
 
-                if ($selectedOption->is_correct) {
-                    $score += $pointsPerQuestion;
+                    if ($selectedOption->is_correct) {
+                        $score += $pointsPerQuestion;
+                    }
                 }
             }
         }
-    }
 
-    try {
-        Result::create([
-            'user_id' => Auth::id(),
-            'category_id' => $category->id,
-            'score' => $score,
-        ]);
-        $request->session()->forget('answers');
-        return redirect()->route('beranda')->with('status', 'Ujian selesai. Skor: ' . $score);
-    } catch (\Exception $e) {
-        return redirect()->back()->with('error', 'Gagal menyimpan hasil ujian: ' . $e->getMessage());
+        try {
+            Result::create([
+                'user_id' => Auth::id(),
+                'category_id' => $category->id,
+                'score' => $score,
+            ]);
+            $request->session()->forget('answers');
+            return redirect()->route('beranda')->with('status', 'Ujian selesai. Skor: ' . $score);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menyimpan hasil ujian: ' . $e->getMessage());
+        }
     }
-}
 
     public function verifyExamCode(Request $request, $id)
     {
@@ -189,32 +179,30 @@ class CategoryController extends Controller
     }
 
     public function showResults($categoryId)
-{
-    $userId = Auth::id();
-    $results = Result::where('user_id', $userId)->get();
-    $category = Category::with('mapel')->findOrFail($categoryId);
-    $questions = Question::where('category_id', $categoryId)->get();
-    $countQuestion = $questions->count();
-    $tanggal = Carbon::parse($category->tanggal_ujian)->translatedFormat('d F Y');
+    {
+        $userId = Auth::id();
+        $results = Result::where('user_id', $userId)->get();
+        $category = Category::with('mapel')->findOrFail($categoryId);
+        $questions = Question::where('category_id', $categoryId)->get();
+        $countQuestion = $questions->count();
+        $tanggal = Carbon::parse($category->tanggal_ujian)->translatedFormat('d F Y');
 
-    $results = Result::where('user_id', $userId)->where('category_id', $categoryId)->get();
-    $totalScore = $results->sum('score');
+        $results = Result::where('user_id', $userId)->where('category_id', $categoryId)->get();
+        $totalScore = $results->sum('score');
 
-    if ($countQuestion > 0) {
-        $pointQuestion = 100 / $countQuestion;
-    } else {
-        $pointQuestion = 0;
+        if ($countQuestion > 0) {
+            $pointQuestion = 100 / $countQuestion;
+        } else {
+            $pointQuestion = 0;
+        }
+
+        $selectedAnswers = AnsweredQuestion::where('user_id', $userId)
+            ->whereHas('question', function ($query) use ($categoryId) {
+                $query->where('category_id', $categoryId);
+            })
+            ->get()
+            ->keyBy('question_id');
+
+        return view('client.detail', compact('category', 'questions', 'pointQuestion', 'countQuestion', 'tanggal', 'totalScore', 'selectedAnswers'));
     }
-
-    // Mengambil jawaban yang sudah diberikan oleh pengguna
-    $selectedAnswers = AnsweredQuestion::where('user_id', $userId)
-        ->whereHas('question', function ($query) use ($categoryId) {
-            $query->where('category_id', $categoryId);
-        })
-        ->get()
-        ->keyBy('question_id');
-
-    return view('client.detail', compact('category', 'questions', 'pointQuestion', 'countQuestion', 'tanggal', 'totalScore', 'selectedAnswers'));
-}
-
 }

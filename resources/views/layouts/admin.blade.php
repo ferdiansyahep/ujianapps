@@ -24,6 +24,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bootstrap-4/bootstrap-4.min.css">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('backend/css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -45,9 +46,6 @@
 
         <!-- Sidebar -->
         @include('partials.sidebar')
-        <!-- End of Sidebar -->
-
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
@@ -91,8 +89,7 @@
                     </ul>
 
                 </nav>
-                <!-- End of Topbar -->
-
+                
                 @if(session()->has('message'))
                 <div class="alert alert-{{ session()->get('alert-type') }} alert-dismissible fade show" role="alert"
                     id="alert-message">
@@ -252,6 +249,8 @@
         });
     </script>
     @stack('script-alt')
+    @include('sweetalert::alert')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Page level custom scripts -->
     <!-- <script src="{{ asset('backend/js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('backend/js/demo/chart-pie-demo.js') }}"></script> -->
