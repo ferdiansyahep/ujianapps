@@ -59,9 +59,6 @@
                                         <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-info">
                                             <i class="fa fa-pencil-alt"></i>
                                         </a>
-                                        <a href="{{ route('admin.categories.show', $category->id) }}" class="btn btn-primary">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
                                         <form onclick="return confirm('are you sure ? ')" class="d-inline" action="{{ route('admin.categories.destroy', $category->id) }}" method="POST">
                                             @csrf
                                             @method('delete')

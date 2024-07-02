@@ -7,14 +7,6 @@
             <h2 class="m-0 fw-heading text-dark">
                 {{ __('Database Soal') }}
             </h2>
-            <div class="ml-auto">
-                <a href="{{ route('admin.questions.create') }}" class="btn bg-success-dashboard">
-                    <span class="icon text-white-50">
-                        <i class="fa fa-plus-circle"></i>
-                    </span>
-                    <span class="text">{{ __('Tambah Pertanyaan') }}</span>
-                </a>
-            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">

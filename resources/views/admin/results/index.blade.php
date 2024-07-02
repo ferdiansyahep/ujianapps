@@ -7,14 +7,6 @@
             <h2 class="m-0 font-weight-bold text-dark">
                 {{ __('Data Nilai') }}
             </h2>
-            <div class="ml-auto">
-                <a href="{{ route('admin.results.create') }}" class="btn bg-success-dashboard">
-                    <span class="icon text-dark">
-                        <i class="fa fa-plus-circle"></i>
-                    </span>
-                    <span class="text"> {{ __('result Baru') }}</span>
-                </a>
-            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
