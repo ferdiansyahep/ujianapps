@@ -22,16 +22,14 @@
                                 @endphp
                                 @if ($result)
                                 <p class="mb-0 float-start">
-                                    <a href="#" class="text-decoration-none text-dark open-modal" data-toggle="modal"
+                                    <a href="#" class="text-decoration-none text-dark open-modal" style="pointer-events: none;" data-toggle="modal"
                                         data-target="#examCodeModal{{ $data->id }}">{{ $data->name }}</a>
                                 </p>
-                                <p class="float-end mb-0">{{ $result->score }} / 100</p>
                                 @else
                                 <p class="mb-0 float-start">
                                     <a href="#" class="text-decoration-none text-dark open-modal" data-toggle="modal"
                                         data-target="#examCodeModal{{ $data->id }}">{{ $data->name }}</a>
                                 </p>
-                                <p class="float-end mb-0">0/100</p>
                                 @endif
                             </div>
                         </div>

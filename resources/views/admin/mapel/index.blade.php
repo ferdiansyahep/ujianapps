@@ -25,9 +25,9 @@
                             <th width="10"></th>
                             <th>No</th>
                             <th>Nama Mata Pelajaran</th>
+                            <th>Tahun Ajaran</th>
                             <th>Guru Pengampu</th>
                             <th>Kelas</th>
-                            <th>Kode mapel</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -37,9 +37,9 @@
                             <td></td>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $data->nama_mapel }}</td>
+                            <td>2023 - 2024</td>
                             <td>{{ $data->user?->name }}</td>
                             <td>{{ $data->kelas }}</td>
-                            <td>{{ $data->kode_mapel }}</td>
                             <td>
                                 <div class="btn-group btn-group-sm">
                                     <a href="{{ route('admin.mapel.edit', $data->id) }}" class="btn btn-warning">
