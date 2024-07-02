@@ -20,6 +20,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
 {
+    public function index(): View
+    {
+        abort_if(Gate::denies('class_access'), Response::HTTP_FORBIDDEN, 'Akses tidak diizinkan');
+        $categories = Category::all();
+        $users = User::all();
+
+        return view('admin.categories.index', compact('categories', 'users'));
+    }
+    
     public function create()
     {
         abort_if(Gate::denies('class_create'), Response::HTTP_FORBIDDEN, 'Akses tidak diizinkan');

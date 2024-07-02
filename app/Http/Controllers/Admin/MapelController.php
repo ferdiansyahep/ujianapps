@@ -53,14 +53,18 @@ class MapelController extends Controller
 
     public function edit(Mapel $mapel): View
     {
-        return view('admin.mapel.edit', compact('mapel'));
+        $guru = User::whereHas('roles', function ($query) {
+            $query->where('title', 'guru');
+        })->pluck('name', 'id');
+
+        return view('admin.mapel.edit', compact('mapel', 'guru'));
     }
 
     public function update(Request $request, Mapel $mapel): RedirectResponse
     {
         $mapel->update($request->all());
 
-        return redirect()->route('admin.mapel.index')->with([
+        return redirect()->back()->with([
             'message' => 'successfully updated !',
             'alert-type' => 'info'
         ]);
