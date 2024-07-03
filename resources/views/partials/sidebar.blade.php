@@ -2,7 +2,7 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center bg-light" href="{{ url('/') }}">
-        <div class="sidebar-brand-text mx-3">
+        <div class="sidebar-brand-text mx-2">
             <img src="{{ asset('img/logo-blue.png') }}" width="125px">
         </div>
     </a>
@@ -23,7 +23,7 @@
     
 
     @cannot('user_access')
-    <li class="nav-item mx-3 mt-3 btn btn-outline-light no-hover">
+    <li class="nav-item mx-2 mt-3 btn no-hover">
         <a class="d-flex align-items-center" href="{{ route('beranda') }}">
             <img src="{{ asset('img/home-icon.png') }}" alt="" class="mr-1 w-auto">
             <span class="text-light mt-1">{{ __('Beranda') }}</span>
@@ -63,7 +63,7 @@
     @endcan
 
     @can('guru_access')
-    <li class="nav-item m-3 btn btn-outline-light no-hover">
+    <li class="nav-item m-2 btn no-hover ">
         <a class="d-flex align-items-center" href="{{ route('guru.categories') }}">
             <img src="{{ asset('img/desk.svg') }}" alt="" class="mr-1 w-auto">
             <span class="text-light">{{ __('Kelas') }}</span>
@@ -149,7 +149,7 @@
     @endcan
 
     @can('siswa_access')
-    <li class="nav-item m-3 btn btn-outline-light no-hover">
+    <li class="nav-item m-2 btn no-hover">
         <a class="d-flex align-items-center" href="{{ route('admin.client.index') }}">
             <img src="{{ asset('img/desk.svg') }}" alt="" class="mr-1 w-auto">
             <span class="text-light">{{ __('Ujian') }}</span>
@@ -158,15 +158,15 @@
     @endcan
 
     @can('siswa_access')
-    <li class="nav-item m-3 mt-0 btn btn-outline-light no-hover">
-        <a class="d-flex align-items-center" href="{{ route('client.results') }}">
-            <img src="{{ asset('img/desk.svg') }}" alt="" class="mr-1 w-auto">
+    <li class="nav-item m-2 mt-0 btn no-hover">
+        <a class="d-flex align-items-center" href="{{ route('client.mapels') }}">
+            <img src="{{ asset('img/result.svg') }}" alt="" class="mr-1 w-auto">
             <span class="text-light">{{ __('Hasil Ujian') }}</span>
         </a>
     </li>
     @endcan
 
-    <li class="nav-item mx-3 btn btn-outline-light no-hover mt-auto">
+    <li class="nav-item mx-2 btn no-hover mt-auto">
         <a class="d-flex align-items-center" href="{{ route('logout') }}"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <img src="{{ asset('img/out.svg') }}" alt="" class="mr-1 w-auto">

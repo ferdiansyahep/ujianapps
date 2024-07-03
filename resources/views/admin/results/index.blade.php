@@ -38,11 +38,11 @@
                             <td>{{ $result->score }}</td>
                             <td>
                                 <div class="btn-group btn-group-sm">
-                                    <a href="{{ route('admin.results.edit', $result->id) }}" class="btn btn-warning">
+                                    <!-- <a href="{{ route('admin.results.edit', $result->id) }}" class="btn btn-warning">
                                         <i class="fa fa-pen-alt"></i>
                                     </a>
                                     <a href="{{ route('admin.results.show', $result->id) }}" class="btn btn-info btn-sm"><i
-                                            class="fa fa-eye"></i></a>
+                                            class="fa fa-eye"></i></a> -->
                                     <form onclick="return confirm('are you sure ? ')" class="d-inline"
                                         action="{{ route('admin.results.destroy', $result->id) }}" method="POST">
                                         @csrf

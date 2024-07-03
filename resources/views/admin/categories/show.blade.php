@@ -101,7 +101,7 @@
                                     name="answer" value="{{ $option->id }}" @if(session('answers.' . $question->id)
                                 == $option->id) checked @endif>
                                 <label
-                                    for="option{{ $currentQuestionIndex }}{{ $loop->index }}">{{ $option->option_text }}</label>
+                                    for="option{{ $currentQuestionIndex }}{{ $loop->index }}">{{ chr(65 + $loop->index) }}. {{ $option->option_text }}</label>
                             </li>
                             @endforeach
                         </ul>

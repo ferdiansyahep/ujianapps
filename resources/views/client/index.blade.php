@@ -40,13 +40,6 @@
                         aria-labelledby="examCodeModalLabel{{ $data->id }}" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="examCodeModalLabel{{ $data->id }}">Masukkan Kode
-                                        Ujian</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
                                 <form action="{{ route('admin.categories.verify', $data->id) }}" method="POST">
                                     @csrf
                                     <div class="modal-body">
@@ -59,7 +52,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Tutup</button>
-                                        <button type="submit" class="btn btn-primary">Verifikasi</button>
+                                        <button type="submit" class="btn btn-primary">Masuk</button>
                                     </div>
                                 </form>
                             </div>

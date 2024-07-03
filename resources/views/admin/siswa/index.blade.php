@@ -53,8 +53,11 @@
                                     <a href="{{ route('admin.siswa.edit', $user->id) }}" class="btn btn-info">
                                         <i class="fa fa-pencil-alt"></i>
                                     </a>
-                                    <a href="{{ route('admin.siswa.addSubject', $user) }}" class="btn btn-warning"><i
-                                            class="fa fa-plus"></i></a>
+                                    <a href="{{ route('admin.siswa.show', $user->id) }}" class="btn btn-warning">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    <!-- <a href="{{ route('admin.siswa.addSubject', $user) }}" class="btn btn-warning"><i
+                                            class="fa fa-plus"></i></a> -->
                                     <form onclick="return confirm('are you sure ? ')" class="d-inline"
                                         action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
                                         @csrf

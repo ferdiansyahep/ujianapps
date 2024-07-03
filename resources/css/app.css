@@ -8284,3 +8284,11 @@ button.switch-month {
 
 button.switch-month:hover {
   color: #1089ff; }
+
+.nav-item.clicked {
+    background-color: white;
+    color: black;
+}
+.nav-item.clicked a {
+    color: black;
+}

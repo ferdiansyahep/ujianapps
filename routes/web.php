@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'beranda'])->name('beranda');
-    Route::get('nilai',[\App\Http\Controllers\Admin\SiswaController::class, 'hasilUjian'])->name('client.results');
+    Route::get('nilai/{mapel_id}',[\App\Http\Controllers\Admin\SiswaController::class, 'hasilUjian'])->name('client.results');
+    Route::get('daftar-mapel',[\App\Http\Controllers\Admin\SiswaController::class, 'mapel'])->name('client.mapels');
     Route::get('daftar-nilai',[\App\Http\Controllers\Admin\GuruController::class, 'daftarNilai'])->name('client.nilai');
     Route::get('results/{result_id}',[\App\Http\Controllers\ResultController::class, 'show'])->name('client.results.show');
     Route::get('/ujian', [\App\Http\Controllers\Admin\SiswaController::class, 'jadwalUjian'])->name('admin.client.index');

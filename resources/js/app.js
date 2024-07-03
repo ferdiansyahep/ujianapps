@@ -398,5 +398,4 @@ require('./bootstrap');
     }
 });
 
-
 })(jQuery);

@@ -83,10 +83,11 @@
                                 <div class="col-md-6">
                                     <div class="identitas-item">
                                         <p>SMP Al-Azhar Syifa Budi</p>
-                                        <p>info@smkn1contohkota.sch.id</p>
+                                        <p>info@alazharsyifabudi.sch.id</p>
                                         <p><a href="http://www.smkn1contohkota.sch.id"
-                                                target="_blank">www.smkn1contohkota.sch.id</a></p>
-                                        <p>Jl. Pahlawan No. 123, Contoh Kota</p>
+                                                target="_blank">www.alazharsyifabudi.sch.id</a></p>
+                                        <p>Perumahan Talaga Bestari, Jl. Jungle Boulevard No.1, Cibadak, Kec. Cikupa, Kabupaten Tangerang,
+                                        Banten 15710</p>
                                         <p>(021) 1234567</p>
                                     </div>
                                 </div>

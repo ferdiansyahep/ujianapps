@@ -20,6 +20,7 @@ class SiswaController extends Controller
     {
         $users = User::whereHas('roles', function ($query) {
         $query->where('title', 'Siswa');})->where('kelas', $kelas)->get();
+
         return view('admin.siswa.index', compact('users', 'kelas'));
     }
 
@@ -29,10 +30,10 @@ class SiswaController extends Controller
         return view('admin.siswa.create', compact('roles'));
     }
 
-    public function show(User $siswa)
+    public function show($id)
     {
-        $siswa->load('mapels'); 
-        return view('admin.siswa.show', compact('siswa'));
+        $user = User::findOrFail($id);
+        return view('admin.siswa.show', compact('user'));
     }
 
     public function edit($id)
@@ -86,11 +87,28 @@ class SiswaController extends Controller
         return view('admin.siswa.show', compact('siswa'));
     }
 
-    public function hasilUjian() {
+    public function hasilUjian($id) {
         $userId = Auth::id();
-        $results = Result::where('user_id', $userId)->get();
+        $user = Auth::user();
 
-        return view('client.results', compact('results'));
+        $mapel = Mapel::with('category')->find($id);
+        $results = Result::where('user_id', $userId)
+                    ->whereHas('category', function($query) use ($id) {
+                        $query->where('mapel_id', $id);
+                    })
+                    ->get();
+    
+        return view('client.results', compact('results', 'mapel'));
+    }
+    
+
+    public function mapel() {
+        $userId = Auth::id();
+        $user = Auth::user();
+
+        $mapel = Mapel::where('kelas', $user->kelas)->get();
+
+        return view('client.mapel', compact('mapel'));
     }
 
     public function jadwalUjian()
