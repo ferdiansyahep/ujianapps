@@ -106,7 +106,7 @@ class PermissionController extends Controller
         ]);
     }
 
-     /**
+    /**
      * Delete all selected Permission at once.
      *
      * @param Request $request

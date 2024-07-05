@@ -15,6 +15,7 @@ use App\Models\Option;
 use App\Models\Result;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class QuestionController extends Controller
 {
@@ -69,10 +70,9 @@ class QuestionController extends Controller
             ]);
         }
 
-        return redirect()->back()->with([
-            'message' => 'Successfully created!',
-            'alert-type' => 'success'
-        ]);
+        Alert::success('Success!', 'Successfully created!');
+
+        return redirect()->back();
     }
 
 
@@ -124,7 +124,7 @@ class QuestionController extends Controller
             'category_id' => $request->input('category_id'),
         ]);
 
-    // Hapus opsi yang udah ada
+        // Hapus opsi yang sudah ada
         $question->options()->delete();
 
         foreach ($request->input('options') as $index => $optionText) {
@@ -136,11 +136,10 @@ class QuestionController extends Controller
                 'is_correct' => $isCorrect,
             ]);
         }
+        
+        Alert::success('Success!', 'Successfully updated!');
 
-        return redirect()->route('admin.questions.index')->with([
-            'message' => 'Successfully updated!',
-            'alert-type' => 'success',
-        ]);
+        return redirect()->route('admin.questions.index');
     }
 
     public function destroy(Question $question): RedirectResponse

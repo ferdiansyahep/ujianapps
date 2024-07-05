@@ -101,7 +101,8 @@
                                     name="answer" value="{{ $option->id }}" @if(session('answers.' . $question->id)
                                 == $option->id) checked @endif>
                                 <label
-                                    for="option{{ $currentQuestionIndex }}{{ $loop->index }}">{{ chr(65 + $loop->index) }}. {{ $option->option_text }}</label>
+                                    for="option{{ $currentQuestionIndex }}{{ $loop->index }}">{{ chr(65 + $loop->index) }}.
+                                    {{ $option->option_text }}</label>
                             </li>
                             @endforeach
                         </ul>
@@ -127,9 +128,10 @@
                             @endif
                     </div>
                     <div>
-                        @if($currentQuestionIndex === $questions->count() - 2)
+                        @if($currentQuestionIndex == $questions->count() - 1)
+                        <button type="submit" name="finish" class="btn btn-success me-2"
+                            onclick="confirmFinish()">Selesai</button>
                         @endif
-                        <button type="submit" name="finish" class="btn btn-success me-2">Selesai</button>
                         <button type="submit" name="save" class="btn bg-success-dashboard">Simpan</button>
                     </div>
                 </div>
@@ -180,4 +182,22 @@
         </div>
     </div>
 </div>
+<script>
+    function confirmFinish() {
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Anda yakin ingin menyelesaikan ujian?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, selesai'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('answer-form').submit(); // Submit form
+            }
+        });
+    }
+</script>
+
 @endsection

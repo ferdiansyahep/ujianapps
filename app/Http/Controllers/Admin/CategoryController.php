@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Result;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
@@ -50,10 +51,9 @@ class CategoryController extends Controller
 
         Category::create($request->all());
 
-        return redirect()->route('admin.categories.index')->with([
-            'message' => 'successfully created !',
-            'alert-type' => 'success'
-        ]);
+        Alert::success('Success!', 'Category successfully created!');
+
+        return redirect()->route('admin.categories.index');
     }
 
     public function show(Request $request, $categoryId, $questionIndex = 0)
@@ -103,10 +103,9 @@ class CategoryController extends Controller
 
         $category->update($request->all());
 
-        return redirect()->route('admin.categories.index')->with([
-            'message' => 'successfully updated !',
-            'alert-type' => 'info'
-        ]);
+        Alert::info('Info!', 'Category successfully updated!');
+
+        return redirect()->route('admin.categories.index');
     }
 
     public function destroy(Category $category)
@@ -114,10 +113,9 @@ class CategoryController extends Controller
         abort_if(Gate::denies('class_delete'), Response::HTTP_FORBIDDEN, 'Akses tidak diizinkan');
         $category->delete();
 
-        return back()->with([
-            'message' => 'successfully deleted !',
-            'alert-type' => 'danger'
-        ]);
+        Alert::error('Success!', 'Category successfully deleted!');
+
+        return redirect()->route('admin.categories.index');
     }
 
     public function massDestroy()

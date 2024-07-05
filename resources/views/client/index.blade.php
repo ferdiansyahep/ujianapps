@@ -20,15 +20,19 @@
                                 @php
                                 $result = $results->firstWhere('category_id', $data->id);
                                 @endphp
-                                @if ($result)
+                                @if ($data->isCompleted)
                                 <p class="mb-0 float-start">
-                                    <a href="#" class="text-decoration-none text-dark open-modal" style="pointer-events: none;" data-toggle="modal"
+                                    <a href="#" class="text-decoration-none text-dark" style="pointer-events: none;">{{ $data->name }}</a>
+                                </p>
+                                @elseif ($data->isAccessible)
+                                <p class="mb-0 float-start">
+                                    <a href="#" class="text-decoration-none text-dark open-modal" data-toggle="modal"
                                         data-target="#examCodeModal{{ $data->id }}">{{ $data->name }}</a>
                                 </p>
                                 @else
                                 <p class="mb-0 float-start">
-                                    <a href="#" class="text-decoration-none text-dark open-modal" data-toggle="modal"
-                                        data-target="#examCodeModal{{ $data->id }}">{{ $data->name }}</a>
+                                    <a href="#" class="text-decoration-none text-dark"
+                                        style="pointer-events: none;">{{ $data->name }}</a>
                                 </p>
                                 @endif
                             </div>

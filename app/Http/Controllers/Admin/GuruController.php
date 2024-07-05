@@ -13,6 +13,7 @@ use App\Models\Result;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class GuruController extends Controller
 {
@@ -41,8 +42,8 @@ class GuruController extends Controller
     
     public function edit($id)
     {
-        $user = User::findOrFail($id); // Pastikan ini mendapatkan data guru
-        $roles = Role::all()->pluck('name', 'id'); // Pastikan ini mendapatkan data role
+        $user = User::findOrFail($id);
+        $roles = Role::all()->pluck('name', 'id');
         return view('admin.guru.edit', compact('user', 'roles'));
     }
     
@@ -59,10 +60,9 @@ class GuruController extends Controller
         $user->update($request->validated() + ['password' => bcrypt($request->password)]);
         $user->roles()->sync($request->input('roles', []));
 
-        return redirect()->route('admin.guru.index')->with([
-            'message' => 'User successfully updated!',
-            'alert-type' => 'info'
-        ]);
+        Alert::info('Info!', 'User successfully updated!');
+
+        return redirect()->route('admin.users.index');
     }
 
     public function show($id)
@@ -83,10 +83,9 @@ class GuruController extends Controller
         $user = User::create($input);
         $user->roles()->sync($request->input('roles', []));
 
-        return redirect()->route('admin.users.index')->with([
-            'message' => 'Guru successfully created!',
-            'alert-type' => 'success'
-        ]);
+        Alert::success('Success!', 'Guru successfully created!');
+
+        return redirect()->route('admin.users.index');
     }
 
     public function daftarNilai() {

@@ -9,6 +9,7 @@ use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MapelController extends Controller
 {
@@ -37,13 +38,12 @@ class MapelController extends Controller
             'kode_mapel' => 'required|string|max:255',
             'user_id' => 'required|exists:users,id',
         ]);
-        
+    
         Mapel::create($request->all());
 
-        return redirect()->back()->with([
-            'message' => 'successfully created !',
-            'alert-type' => 'success'
-        ]);
+        Alert::success('Success!', 'Mapel successfully created!');
+
+        return redirect()->back();
     }
 
     public function show(Mapel $mapel): View
@@ -64,20 +64,18 @@ class MapelController extends Controller
     {
         $mapel->update($request->all());
 
-        return redirect()->back()->with([
-            'message' => 'successfully updated !',
-            'alert-type' => 'info'
-        ]);
+        Alert::info('Info!', 'Mapel successfully updated!');
+
+        return redirect()->back();
     }
 
     public function destroy(Mapel $mapel): RedirectResponse
     {
         $mapel->delete();
 
-        return back()->with([
-            'message' => 'successfully deleted !',
-            'alert-type' => 'danger'
-        ]);
+        Alert::error('Success!', 'Mapel successfully deleted!');
+
+        return redirect()->back();
     }
 
     public function massDestroy()

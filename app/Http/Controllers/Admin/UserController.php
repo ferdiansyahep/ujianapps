@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\Mapel;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -51,10 +52,9 @@ class UserController extends Controller
         $user = User::create($input);
         $user->roles()->sync($request->input('roles', []));
 
-        return redirect()->route('admin.users.index')->with([
-            'message' => 'User successfully created!',
-            'alert-type' => 'success'
-        ]);
+        Alert::success('Success!', 'User successfully created!');
+
+        return redirect()->route('admin.users.index');
     }
 
 
@@ -83,10 +83,9 @@ class UserController extends Controller
         $user->update($request->validated() + ['password' => bcrypt($request->password)]);
         $user->roles()->sync($request->input('roles', []));
 
-        return redirect()->route('admin.users.index')->with([
-            'message' => 'User successfully updated!',
-            'alert-type' => 'info'
-        ]);
+        Alert::info('Info!', 'User successfully updated!');
+
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -99,10 +98,9 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('admin.users.index')->with([
-            'message' => 'User successfully deleted!',
-            'alert-type' => 'danger'
-        ]);
+        Alert::error('Error!', 'User successfully deleted!');
+
+        return redirect()->route('admin.users.index');
     }
 
     /**

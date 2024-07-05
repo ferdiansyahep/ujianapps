@@ -13,20 +13,27 @@
     <!-- Nav Item - Dashboard -->
     @can('user_management_access')
     <li class="nav-item {{ request()->is('admin/dashboard') ? 'active' : '' }}">
-        <a class="nav-link d-flex align-items-center" href="{{ route('admin.dashboard.index') }}">
+        <a class="nav-link " href="{{ route('admin.dashboard.index') }}">
             <img src="{{ asset('img/home-icon.png') }}" alt="" class="mr-2 w-auto">
             <span class="text-light mt-1">{{ __('Dashboard') }}</span>
         </a>
     </li>
     @endcan
 
-    
-
     @cannot('user_access')
-    <li class="nav-item mx-2 mt-3 btn no-hover">
-        <a class="d-flex align-items-center" href="{{ route('beranda') }}">
+    <li class="nav-item {{ request()->is('beranda') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('beranda') }}">
             <img src="{{ asset('img/home-icon.png') }}" alt="" class="mr-1 w-auto">
             <span class="text-light mt-1">{{ __('Beranda') }}</span>
+        </a>
+    </li>
+    @endcan
+
+    @can('user_management_access')
+    <li class="nav-item {{ request()->is('admin/categories') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.categories.index') }}">
+            <img src="{{asset('img/desk.svg')}}">
+            <span class="text-light">{{ __('Jadwal ujian') }}</span>
         </a>
     </li>
     @endcan
@@ -63,8 +70,8 @@
     @endcan
 
     @can('guru_access')
-    <li class="nav-item m-2 btn no-hover ">
-        <a class="d-flex align-items-center" href="{{ route('guru.categories') }}">
+    <li class="nav-item {{ request()->is('admin/categories') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('guru.categories') }}">
             <img src="{{ asset('img/desk.svg') }}" alt="" class="mr-1 w-auto">
             <span class="text-light">{{ __('Kelas') }}</span>
         </a>
@@ -149,8 +156,8 @@
     @endcan
 
     @can('siswa_access')
-    <li class="nav-item m-2 btn no-hover">
-        <a class="d-flex align-items-center" href="{{ route('admin.client.index') }}">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.client.index') }}">
             <img src="{{ asset('img/desk.svg') }}" alt="" class="mr-1 w-auto">
             <span class="text-light">{{ __('Ujian') }}</span>
         </a>
@@ -158,16 +165,16 @@
     @endcan
 
     @can('siswa_access')
-    <li class="nav-item m-2 mt-0 btn no-hover">
-        <a class="d-flex align-items-center" href="{{ route('client.mapels') }}">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('client.mapels') }}">
             <img src="{{ asset('img/result.svg') }}" alt="" class="mr-1 w-auto">
             <span class="text-light">{{ __('Hasil Ujian') }}</span>
         </a>
     </li>
     @endcan
 
-    <li class="nav-item mx-2 btn no-hover mt-auto">
-        <a class="d-flex align-items-center" href="{{ route('logout') }}"
+    <li class="nav-item mt-auto">
+        <a class="nav-link" href="{{ route('logout') }}"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <img src="{{ asset('img/out.svg') }}" alt="" class="mr-1 w-auto">
             <span class="text-light">{{ __('Keluar') }}</span>
